@@ -37,7 +37,7 @@ public class FacultyController {
         return facultyService.getByColor(color);
     }
 
-    @PutMapping("/id")
+    @PutMapping("{/id}")
     public Faculty update(@PathVariable("id") Long id, @RequestBody Faculty faculty) {
         return facultyService.update(id, faculty);
     }
