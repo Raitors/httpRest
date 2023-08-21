@@ -29,6 +29,10 @@ public class FacultyService {
         return facultyRepository.findAllByColor(color);
     }
 
+    public Collection<Faculty> getByColorOrName(String color, String name) {
+        return facultyRepository.findAllByColorIgnoreCaseOrNameIgnoreCase(color, name);
+    }
+
     public Faculty create(Faculty faculty) {
         return facultyRepository.save(faculty);
 
@@ -52,5 +56,10 @@ public class FacultyService {
                 .orElseThrow(DataNotFoundException::new);
         facultyRepository.delete(faculty);
         return faculty;
+    }
+
+
+    public Faculty getByStudentId(Long studentId) {
+        return facultyRepository.findByStudent_Id(studentId).orElseThrow(DataNotFoundException::new);
     }
 }
