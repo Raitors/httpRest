@@ -25,13 +25,15 @@ public class FacultyService {
         return facultyRepository.findAll();
     }
 
+    //
     public Collection<Faculty> getByColor(String color) {
         return facultyRepository.findAllByColor(color);
-    }
+    }//
 
-    public Collection<Faculty> getByColorOrName(String color, String name) {
-        return facultyRepository.findAllByColorIgnoreCaseOrNameIgnoreCase(color, name);
-    }
+    //
+    public Collection<Faculty> getByColorOrName(String name, String color) {
+        return facultyRepository.findAllByColorIgnoreCaseOrNameIgnoreCase(name, color);
+    }//
 
     public Faculty create(Faculty faculty) {
         return facultyRepository.save(faculty);
