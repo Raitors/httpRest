@@ -1,7 +1,9 @@
 package com.example.httpRest.service;
 
 import com.example.httpRest.exception.DataNotFoundException;
+import com.example.httpRest.model.Faculty;
 import com.example.httpRest.model.Student;
+import com.example.httpRest.repository.FacultyRepository;
 import com.example.httpRest.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +12,13 @@ import java.util.Optional;
 
 @Service
 public class StudentService {
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
-
     private final StudentRepository studentRepository;
+    private final FacultyRepository facultyRepository;
+
+    public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
+        this.studentRepository = studentRepository;
+        this.facultyRepository = facultyRepository;
+    }
 
     public Student getById(long id) {
         return studentRepository.findById(id).orElseThrow(DataNotFoundException::new);
@@ -50,7 +54,10 @@ public class StudentService {
     }
 
     public Collection<Student> getByFacultyId(Long facultyId) {
-        return studentRepository.findAllByFaculty_Id(facultyId);
+        return facultyRepository.findById(facultyId)
+                .map(Faculty::getStudent)
+                .orElseThrow(DataNotFoundException::new);
+
     }
 
 }

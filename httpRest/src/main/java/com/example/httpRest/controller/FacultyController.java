@@ -9,8 +9,6 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/faculty")
 public class FacultyController {
-
-
     private final FacultyService facultyService;
 
     public FacultyController(FacultyService facultyService) {
@@ -32,19 +30,20 @@ public class FacultyController {
         return facultyService.create(faculty);
     }
 
-    @GetMapping("/filtred")
-    public Collection<Faculty> getByColor(@RequestParam("color") String color) {
-        return facultyService.getByColor(color);
-    }
-
     @PutMapping("/{id}")
     public Faculty update(@PathVariable("id") Long id, @RequestBody Faculty faculty) {
         return facultyService.update(id, faculty);
     }
 
     @DeleteMapping("/{id}")
-    public void remove(@PathVariable("id") Long id) {
-        facultyService.remove(id);
+    public Faculty remove(@PathVariable("id") Long id) {
+
+        return facultyService.remove(id);
+    }
+
+    @GetMapping("/filtered")
+    public Collection<Faculty> getByColor(@RequestParam("color") String color) {
+        return facultyService.getByColor(color);
     }
 
     @GetMapping("/by-color-or-name")
@@ -56,4 +55,5 @@ public class FacultyController {
     public Faculty getByStudent(@RequestParam Long studentId) {
         return facultyService.getByStudentId(studentId);
     }
+
 }

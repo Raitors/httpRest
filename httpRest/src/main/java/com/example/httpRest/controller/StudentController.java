@@ -43,7 +43,7 @@ public class StudentController {
     }
 
     @GetMapping("/by-faculty")
-    public Collection<Student> filtered(@RequestParam Long facultyId) {
+    public Collection<Student> getByAge(@RequestParam Long facultyId) {
         return studentService.getByFacultyId(facultyId);
     }
 
@@ -53,7 +53,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public void remove(@PathVariable("id") Long id) {
-        studentService.remove(id);
+    public Student remove(@PathVariable("id") Long id) {
+        return studentService.remove(id);
     }
 }
