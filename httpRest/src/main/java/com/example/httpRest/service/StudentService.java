@@ -8,6 +8,7 @@ import com.example.httpRest.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,4 +61,15 @@ public class StudentService {
 
     }
 
+    public long count() {
+        return studentRepository.countStudent();
+    }
+
+    public double average() {
+        return studentRepository.averageAge();
+    }
+
+    public List<Student> getLastStudents(int quantity) {
+        return studentRepository.findLastStudent(quantity);
+    }
 }

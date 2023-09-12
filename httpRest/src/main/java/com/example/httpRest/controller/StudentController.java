@@ -5,6 +5,7 @@ import com.example.httpRest.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -55,5 +56,20 @@ public class StudentController {
     @DeleteMapping("/{id}")
     public Student remove(@PathVariable("id") Long id) {
         return studentService.remove(id);
+    }
+
+    @GetMapping("/count")
+    public long count() {
+        return studentService.count();
+    }
+
+    @GetMapping("/average")
+    public double average() {
+        return studentService.average();
+    }
+
+    @GetMapping("/last-five")
+    public List<Student> getLastFive() {
+        return studentService.getLastStudents(5);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.httpRest.controller;
 
+import com.example.httpRest.dto.AvatarDto;
 import com.example.httpRest.model.Avatar;
 import com.example.httpRest.service.AvatarService;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/avatar")
@@ -54,5 +56,10 @@ public class AvatarController {
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
         headers.setContentLength(avatar.getFileSize());
         return ResponseEntity.status(200).headers(headers).body(data);
+    }
+
+    @GetMapping("/page/{num}")
+    public List<AvatarDto> getPage(@PathVariable("num") int pageNum) {
+        return avatarService.getPage(pageNum);
     }
 }

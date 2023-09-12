@@ -1,10 +1,12 @@
 package com.example.httpRest.service;
 
+import com.example.httpRest.dto.AvatarDto;
 import com.example.httpRest.model.Avatar;
 import com.example.httpRest.model.Student;
 import com.example.httpRest.repository.AvatarRepository;
 import com.example.httpRest.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +14,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AvatarService {
@@ -51,6 +55,14 @@ public class AvatarService {
         avatar.setData(multipartFile.getBytes());
         avatarRepository.save(avatar);
         return avatar;
+    }
+
+    public List<AvatarDto> getPage(int pageNum) {
+        PageRequest pageRequest = PageRequest.of(pageNum, 3);
+        List<Avatar> avatars = avatarRepository.findAll(pageRequest).getContent();
+        return avatars.stream()
+                .map(AvatarDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     private String saveToDisk(Long studentId, MultipartFile multipartFile) throws IOException {
