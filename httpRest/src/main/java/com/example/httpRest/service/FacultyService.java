@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Comparator;
 
 
 @Service
@@ -70,5 +71,12 @@ public class FacultyService {
         logger.info("invoked method getByStudentId");
         return facultyRepository.findByStudent_Id(studentId).orElseThrow(DataNotFoundException::new);
 
+    }
+
+    public String getLongestNameFaculty() {
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::intern))
+                .orElseThrow(DataNotFoundException::new);
     }
 }

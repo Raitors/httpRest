@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -85,5 +86,20 @@ public class StudentService {
     public List<Student> getLastStudents(int quantity) {
         logger.info("invoked method getLastStudents");
         return studentRepository.findLastStudent(quantity);
+    }
+
+    public List<String> getAllStartsWithA() {
+        return studentRepository.findAll().stream()
+                .map(Student::getName)
+                .filter(s -> s.startsWith("A"))
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    public double getAverageAge() {
+        return studentRepository.findAll().stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElseThrow(DataNotFoundException::new);
     }
 }
